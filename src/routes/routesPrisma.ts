@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { CategoriesRepository } from '../repositores/CategoriesRepository';
+import { CreateCategoryService } from '../services/CreateCategoryService';
 
 const routesPrisma = Router();
 
@@ -8,13 +9,9 @@ const categoriesRepository = new CategoriesRepository();
 routesPrisma.post('/', (request, response) => {
   const { name, phone } = request.body;
 
-  const categoryAlreadyExists = categoriesRepository.findByPhone(phone);
+  const createCategoryService = new CreateCategoryService(categoriesRepository);
 
-  if(categoryAlreadyExists) {
-    return response.status(400).json({ error: "Category Already exists!"});
-  }
-
- categoriesRepository.create({ name, phone });
+  createCategoryService.execute({ name, phone });
 
   return response.status(201).send();
 });

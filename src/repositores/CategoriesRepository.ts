@@ -1,20 +1,16 @@
 import { Category } from '../model/Category';
+import { ICategoriesRepository, ICreateCategoryDTO } from './ICategoriesRepository';
 
 // DTO = Data transfer object
 
-interface ICreateCategoryDTO {
-  name: string;
-  phone: string;
-}
-
-class CategoriesRepository {
+class CategoriesRepository implements ICategoriesRepository {
   
-  private categories: Category[] = [];//
+  private categories: Category[];
 
   constructor() {
     this.categories = []
   }
-
+  
   create({ name, phone }: ICreateCategoryDTO): void {
     const category = new Category();
 
@@ -31,8 +27,8 @@ class CategoriesRepository {
     return this.categories;
   };
 
-  findByPhone(phone: string): Category | void {
-    const category = this.categories.find((category) => category.phone === phone);
+  findByPhone(phone: string): Category {
+    const category : any = this.categories.find((category) => category.phone === phone);
     return category;
   }
 }
