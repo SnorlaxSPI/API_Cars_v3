@@ -1,25 +1,28 @@
 import { Router } from 'express';
-import { v4 as uuidV4 } from 'uuid';
-import { Category } from '../model/Category';
+import { CategoriesRepository } from '../repositores/CategoriesRepository';
 
 const routesPrisma = Router();
 
-const categories: Category[] = [];
+const categoriesRepository = new CategoriesRepository();
 
 routesPrisma.post('/', (request, response) => {
   const { name, phone } = request.body;
 
-  const category = new Category();
+  const categoryAlreadyExists = categoriesRepository.findByPhone(phone);
 
-  Object.assign(category, {
-    name,
-    phone,
-    created_at: new Date()
-  });
-  
-  categories.push(category);
+  if(categoryAlreadyExists) {
+    return response.status(400).json({ error: "Category Already exists!"});
+  }
 
-  return response.status(201).json(categories);
+ categoriesRepository.create({ name, phone });
+
+  return response.status(201).send();
+});
+
+routesPrisma.get('/', (request, response) => {
+  const all = categoriesRepository.list();
+
+  return response.json(all);
 })
 
 export { routesPrisma };
