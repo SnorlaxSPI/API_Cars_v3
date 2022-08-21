@@ -1,5 +1,4 @@
-import { ICategoriesRepository } from "../repositores/ICategoriesRepository";
-
+import { ICategoriesRepository } from "../../../repositores/ICategoriesRepository";
 
 interface IRequest {
   name: string;
@@ -8,7 +7,7 @@ interface IRequest {
 
 // Utilizando o Liskov Substitution Principle
 
-class CreateCategoryService {
+class CreateCategoryUseCase {
   constructor(private categoriesRepository: ICategoriesRepository) {}
 
   execute({ name, phone }: IRequest) {
@@ -22,4 +21,4 @@ class CreateCategoryService {
   }
 }
 
-export { CreateCategoryService };
+export { CreateCategoryUseCase };
