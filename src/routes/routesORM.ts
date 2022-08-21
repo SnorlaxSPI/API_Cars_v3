@@ -1,17 +1,16 @@
 import { Router } from 'express';
 
-import { CategoriesRepository } from '../repositores/CategoriesRepository';
 import { createCategoryController } from '../modules/useCases/createCategory';
 import { listCategoryController } from '../modules/useCases/listCategory';
 
-const routesPrisma = Router();
+const routesORM = Router();
 
-routesPrisma.post('/', (request, response) => {
+routesORM.post('/', (request, response) => {
   return createCategoryController.handle(request, response)
 });
 
-routesPrisma.get('/', (request, response) => {
+routesORM.get('/', (request, response) => {
   return listCategoryController.handle(request, response);
 });
 
-export { routesPrisma };
+export { routesORM };

@@ -1,11 +1,13 @@
 import express from 'express';
-import { routesPrisma } from './routes/routesPrisma';
+import { routesORM } from './routes/routesORM';
+
+import './database';
 
 const app = express();
 
 app.use(express.json());
 
-app.use('/clients', routesPrisma);
+app.use('/clients', routesORM);
 
 app.listen(3000, () => {
   console.log('🚀🚀 Server Started!');
